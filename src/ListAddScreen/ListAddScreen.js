@@ -1,4 +1,4 @@
-import { View, Text, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, ScrollView, TouchableOpacity, FlatList } from 'react-native'
 import React, { useState, useContext } from 'react'
 import styles from './ListAddScreenStyles'
 import SelectedFormat from './SelectedFormat'
@@ -10,6 +10,22 @@ const ListAddScreen = () => {
   const listFormat = ["Text", "Bullet list"]
   const { formatSelected, setFormatSelected } = useContext(ListFormatMode)
 
+  const listRenderItem = ({ item }) => {
+
+    return (
+      <View style={styles.formatOption}>
+        <TouchableOpacity style={{ width: "100%", alignItems: "center" }}
+          onPress={() => {
+            /* Set text mode */
+            console.log(item);
+            setFormatSelected(item)
+          }}
+        >
+          <Text style={{ fontSize: 18 }}>{item}</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
 
   return (
     <View>
@@ -30,25 +46,14 @@ const ListAddScreen = () => {
               title={listTitle}
             />
           </View>
-
         ) : (
           <View style={styles.formatContainer}>
             <Text style={{ fontSize: 20, marginRight: "auto", marginBottom: "10%" }}>Choose format</Text>
-            {listFormat.map((item, index) => {
-              return (
-                <View style={styles.formatOption}>
-                  <TouchableOpacity style={{ width: "100%", alignItems: "center" }}
-                    onPress={() => {
-                      /* Set text mode */
-                      console.log(item);
-                      setFormatSelected(item)
-                    }}
-                  >
-                    <Text style={{ fontSize: 18 }}>{item}</Text>
-                  </TouchableOpacity>
-                </View>
-              )
-            })}
+            <FlatList
+              style={{ width: "100%" }}
+              data={listFormat}
+              renderItem={listRenderItem}
+            />
             <View style={{ height: 1, width: "100%", backgroundColor: "black" }} />
           </View>
         )}

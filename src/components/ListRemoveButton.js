@@ -32,7 +32,6 @@ const ListRemoveButton = () => {
     })
 
 
-
     return (
         <TouchableOpacity
             onPress={() => {
@@ -42,7 +41,6 @@ const ListRemoveButton = () => {
                 }
                 rotateImage()
                 setChangeImage(true)
-
             }}
         >
             <Animated.Image
